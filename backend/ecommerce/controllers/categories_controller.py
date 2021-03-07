@@ -20,7 +20,7 @@ def create_category():
             'status': 400,
             'message': 'Validation error',
             'details': e.messages
-        }
+        }, 400
 
 
 @router.route('/api/categories', methods=['GET'])
@@ -48,7 +48,7 @@ def update_category(category_id):
             'status': 400,
             'message': 'Validation error',
             'details': e.messages
-        }
+        }, 400
 
 
 @router.route('/api/categories/<int:category_id>', methods=['DELETE'])
