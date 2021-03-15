@@ -1,22 +1,20 @@
-from os import environ
-
-
-class BaseHttpException(Exception):
+class HttpError(Exception):
 
     def __init__(self, status=500, message='Internal server error', details=None):
-        super().__init__()
         self.status = status
         self.message = message
         self.details = details
 
+    @classmethod
+    def bad_request(cls, message='Bad request', details=None):
+        return cls(400, message, details)
 
-class NotFoundException(BaseHttpException):
+    @classmethod
+    def not_found(cls, message='Not found', details=None):
+        return cls(404, message, details)
 
-    def __init__(self, message='Not Found', details=None):
-        super().__init__(status=404, message=message, details=details)
 
-
-def handle_base_http_exception(e: BaseHttpException):
+def handle_http_errors(e):
     return {
         'status': e.status,
         'message': e.message,

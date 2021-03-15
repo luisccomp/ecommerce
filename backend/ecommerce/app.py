@@ -1,30 +1,30 @@
 from os import environ
-
 from flask import Flask
-
-from . import exceptions
-from .controllers import categories_controller
-from .extensions import db, migrate
-from .settings import profiles
-from .commands import init_db
+from .extensions import db
+from .exceptions import HttpError, handle_http_errors
+from ecommerce import categories
 
 
 def create_app():
+    """Application factory function: it's recommended by official documentation fo launch an app this way"""
     app = Flask(__name__)
-    app.config.from_object(profiles.get(environ.get('FLASK_ENV'), 'development'))
+    app.config.from_mapping(environ.items())
 
+    # Configuring and registering flask's extensions
     register_extensions(app)
-    register_exception_handlers(app)
+    # Configuring application routes
+    register_blueprings(app)
 
-    app.register_blueprint(categories_controller.router)
+    app.register_error_handler(HttpError, handle_http_errors)
 
     return app
 
 
 def register_extensions(app):
+    """Register Flask extensions"""
     db.init_app(app)
-    migrate.init_app(app, db)
 
 
-def register_exception_handlers(app):
-    app.register_error_handler(exceptions.BaseHttpException, exceptions.handle_base_http_exception)
+def register_blueprings(app):
+    """Register application routes"""
+    app.register_blueprint(categories.api.blueprint)

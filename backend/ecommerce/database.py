@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from .extensions import db
 
-Column = db.Column
+# Aliases for common SQLAlchemy names
 Model = db.Model
+Column = db.Column
