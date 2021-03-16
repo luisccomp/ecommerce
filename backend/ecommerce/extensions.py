@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy, Model
+from flask_bcrypt import Bcrypt
+from flask_jwt import JWT
 
 
 class CRUDMixin(Model):
@@ -37,3 +39,6 @@ class CRUDMixin(Model):
 
 
 db = SQLAlchemy(model_class=CRUDMixin)
+bcrypt = Bcrypt()
+
+jwt = JWT()

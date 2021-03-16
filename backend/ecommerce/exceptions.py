@@ -13,6 +13,10 @@ class HttpError(Exception):
     def not_found(cls, message='Not found', details=None):
         return cls(404, message, details)
 
+    @classmethod
+    def unauthorized(cls, message='Unauthorized', details=None):
+        return cls(401, message, details)
+
 
 def handle_http_errors(e):
     return {
