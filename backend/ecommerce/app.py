@@ -1,8 +1,10 @@
 from os import environ
-from flask import Flask
+from flask import Flask, render_template, Blueprint
 from .extensions import db, bcrypt, jwt
 from .exceptions import HttpError, handle_http_errors
 from ecommerce import categories, products, users
+
+blueprint = Blueprint('root', __name__)
 
 
 def create_app():
@@ -33,3 +35,11 @@ def register_blueprints(app):
     app.register_blueprint(categories.api.blueprint)
     app.register_blueprint(products.api.blueprint)
     app.register_blueprint(users.api.blueprint)
+    app.register_blueprint(blueprint)
+
+
+@blueprint.route('/', methods=['GET'])
+def index():
+    print('Sending root')
+
+    return render_template('index.html')    

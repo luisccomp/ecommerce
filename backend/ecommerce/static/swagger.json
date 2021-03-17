@@ -1,0 +1,68 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Uma simples API com algumas operações CRUD",
+    "version": "1.0.0",
+    "title": "auth"
+  },
+  "host": "localhost:5000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Usuários",
+      "description": "Provides user integrations, like create and update user's informations"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "operationId": "auth.users.api.create_user",
+        "summary": "Cria um novo usuário",
+        "description": "Cria um novo usuário e registra suas informações no banco de dados da aplicação.",
+        "tags": [
+          "Usuários"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "name": "UserCreateRequest",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
